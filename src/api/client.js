@@ -4,9 +4,12 @@ import axios from "axios";
 // In production, VITE_API_URL should point to the backend origin.
 const rawApiUrl = import.meta.env.VITE_API_URL;
 const normalizedApiUrl = rawApiUrl ? rawApiUrl.replace(/\/+$/, "") : "";
+const isLocalDev = typeof window !== "undefined" && window.location.hostname === "localhost";
 const baseURL = normalizedApiUrl
   ? normalizedApiUrl + (normalizedApiUrl.endsWith("/api") ? "" : "/api")
-  : "/api";
+  : isLocalDev
+  ? "/api"
+  : "https://http-status-explorer-backend-1.onrender.com/api";
 
 const api = axios.create({
   baseURL,
